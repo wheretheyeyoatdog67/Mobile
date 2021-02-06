@@ -3,6 +3,8 @@ let mapArr = [];
 let riverArr = [];
 let dx =0;
 let dy =0;
+let moffX = 0;
+let moffY = 0;
 function preload(){
   grass = loadImage("assets/Tiles/mapTiles/grass.png")
   grassDark = loadImage("assets/Tiles/mapTiles/grassD.png")
@@ -17,6 +19,7 @@ function setup(){
 
   createCanvas(800-bw,400-bw,WEBGL)
   mapObj = createGraphics(800-bw,400-bw);
+  interface = createGraphics(800-bw,400-bw);
   createHeightMap();
   drawMap();
 
@@ -27,9 +30,20 @@ function draw(){
   background(0)
   trigClock+=0.1
   mapMovement()
+
   texture(mapObj)
   noStroke()
   plane(800,400)
+  interface.clear()
+  interface.noStroke()
+  interface.fill(70,70,70,200)
+  interface.ellipse(100,275,100,100)
+  interface.fill(200,200,200,200)
+  interface.ellipse(100+10*moffX,275+10*moffY,50,50)
+  texture(interface)
+  noStroke()
+  plane(800,400)
+
 
 
 
@@ -45,10 +59,22 @@ function draw(){
 }
 
 function mousePressed() {
-fullscreen(true);
 
-
-
+  if(dist(mouseX,mouseY,100,275)<100){
+    let l = mouseX - 100;
+    let g = mouseY - 275;
+    moffX = 0;
+    moffY = 0;
+    if(l<0) moffX = -1;
+    else if(l>0) moffX = 1
+    if(g<0) moffY = -1;
+    else if(g>0) moffY = 1;
+    console.log(l)
+    console.log(g)
+    dx+= moffX;
+    dy+= moffY;
+    drawMap()
+  }
 }
 let waterInc = 0;
 function  createHeightMap(){
