@@ -17,9 +17,9 @@ function setup(){
 
 
 
-  createCanvas(600,300,WEBGL)
-  mapObj = createGraphics(600,300);
-  interface = createGraphics(600,300);
+  createCanvas(780,360,WEBGL)
+  mapObj = createGraphics(780,360);
+  interface = createGraphics(780,360);
   createHeightMap();
   drawMap();
 
@@ -46,7 +46,7 @@ function draw(){
 
   texture(mapObj)
   noStroke()
-  plane(600,300)
+  plane(780,360)
   interface.clear()
   interface.noStroke()
   interface.fill(70,70,70,200)
@@ -55,11 +55,11 @@ function draw(){
   interface.ellipse(100+10*moffX,275+10*moffY,50,50)
   interface.stroke(255,0,0)
 
-  interface.ellipse(600/2+bw/2,300/2-bw/7,20,20)
+  interface.ellipse(780/2,360/2,20,20)
 
   texture(interface)
   noStroke()
-  plane(600,300)
+  plane(780,360)
 
 
 
