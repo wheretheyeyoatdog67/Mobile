@@ -13,8 +13,8 @@ function setup(){
   grassDark.resize(bw,bw)
   sand.resize(bw,bw)
 
-  createCanvas(windowWidth-windowWidth%bw-bw,windowHeight-windowHeight%bw-bw,WEBGL)
-  mapObj = createGraphics(windowWidth-windowWidth%bw-bw,windowHeight-windowHeight%bw-bw);
+  createCanvas(800-bw,400-bw,WEBGL)
+  mapObj = createGraphics(800-bw,400-bw);
   createHeightMap();
   drawMap();
 }
