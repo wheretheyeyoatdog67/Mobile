@@ -13,8 +13,10 @@ function setup(){
   grassDark.resize(bw,bw)
   sand.resize(bw,bw)
 
-  createCanvas(800-bw,400-bw,WEBGL)
-  mapObj = createGraphics(800-bw,400-bw);
+
+
+  createCanvas(800-bw,800-bw,WEBGL)
+  mapObj = createGraphics(800-bw,800-bw);
   createHeightMap();
   drawMap();
 }
@@ -39,6 +41,12 @@ function draw(){
   //rotateY(trigClock)
   //sphere(width,height)
   //image(mapObj,0,0)
+}
+function mousePressed() {
+
+    let fs = fullscreen();
+    fullscreen(!fs);
+
 }
 let waterInc = 0;
 function  createHeightMap(){
