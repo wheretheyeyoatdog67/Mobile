@@ -20,13 +20,22 @@ function setup(){
 }
 let trigClock = 0;
 function draw(){
-  orbitControl()
+  // orbitControl()
   background(0)
   trigClock+=0.1
   mapMovement()
   texture(mapObj)
   noStroke()
   plane(1000)
+
+
+
+
+
+
+
+
+
   //rotateY(trigClock)
   //sphere(width,height)
   //image(mapObj,0,0)
