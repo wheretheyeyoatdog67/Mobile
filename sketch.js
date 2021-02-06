@@ -47,15 +47,25 @@ function draw(){
   texture(mapObj)
   noStroke()
   plane(780,360)
+  //interface.strokeWeight(1)
   interface.clear()
   interface.noStroke()
   interface.fill(70,70,70,200)
   interface.ellipse(100,275,100,100)
+  interface.fill(70,0,0,150)
+  interface.ellipse(100,275,20,20)
   interface.fill(200,200,200,200)
   interface.ellipse(100+10*moffX,275+10*moffY,50,50)
+  interface.ellipse(780/2+bw/2,360/2-bw/2,20,20)
   interface.stroke(255,0,0)
 
-  interface.ellipse(780/2,360/2,20,20)
+  interface.strokeWeight(3)
+
+  interface.rect(750,0,bw,bw)
+  interface.line(750,0,780,bw)
+  interface.line(780,0,750,bw)
+
+
 
   texture(interface)
   noStroke()
@@ -76,7 +86,7 @@ function draw(){
 }
 let fg =0;
 function mousePressed() {
-    if(fg == 0 && mouseX > 700&& mouseY < 50){
+    if(fg == 0 && mouseX > 750&& mouseY < 30){
       let fs = fullscreen();
       fullscreen(!fs);
 
@@ -134,7 +144,7 @@ function  createHeightMap(){
 }
 
 function drawMap(){
-  //mapObj.noStroke();
+  mapObj.noStroke();
   for(let i = 0;i<width/bw;i++){
     for(let j = 0;j<height/bw;j++){
       let h = mapArr[i+dx][j+dy];
