@@ -44,10 +44,11 @@ function draw(){
 }
 let fs = 0
 function mousePressed() {
-    fs = 1;
+
     if(fs==0){
       let fs = fullscreen();
       fullscreen(!fs);
+      fs = 1;
     }
 
 
