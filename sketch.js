@@ -79,7 +79,7 @@ function mousePressed() {
     if(fg == 0){
       let fs = fullscreen();
       fullscreen(!fs);
-      fg = 1;
+
     }
 
 
