@@ -17,17 +17,25 @@ function setup(){
 
 
 
-  createCanvas(800-bw,400-bw,WEBGL)
-  mapObj = createGraphics(800-bw,400-bw);
-  interface = createGraphics(800-bw,400-bw);
+  createCanvas(800,400,WEBGL)
+  mapObj = createGraphics(800,400);
+  interface = createGraphics(800,400);
   createHeightMap();
   drawMap();
 
 }
 let trigClock = 0;
 function draw(){
+  if(moffX > 0) moffX -= .1;
+  else if(moffX < 0) moffX += .1;
+  if(moffY > 0) moffY -= .1;
+  else if(moffY < 0) moffY += .1;
+
+
+
   // orbitControl()
   background(0)
+  ellipseMode(CENTER)
   trigClock+=0.1
   mapMovement()
 
@@ -40,6 +48,9 @@ function draw(){
   interface.ellipse(100,275,100,100)
   interface.fill(200,200,200,200)
   interface.ellipse(100+10*moffX,275+10*moffY,50,50)
+  interface.stroke(255,0,0)
+  interface.ellipse(800/2+5,400/2-5,20,20)
+
   texture(interface)
   noStroke()
   plane(800,400)
@@ -64,19 +75,26 @@ function mousePressed() {
     fullscreen(!fs);
    fg = 1;
   }
+
   if(dist(mouseX,mouseY,100,275)<100){
     let l = mouseX - 100;
     let g = mouseY - 275;
-    moffX = 0;
-    moffY = 0;
+
     if(l<0) moffX = -1;
     else if(l>0) moffX = 1
     if(g<0) moffY = -1;
     else if(g>0) moffY = 1;
-    console.log(l)
-    console.log(g)
-    dx+= moffX;
-    dy+= moffY;
+    console.log(l*l)
+    console.log(g*g)
+    if(l*l > g*g){
+      dx+= moffX;
+      moffY = 0;
+    }
+    else {
+      console.log("hi")
+      dy+= moffY;
+      moffX = 0;
+    }
     drawMap()
   }
 
@@ -101,7 +119,7 @@ function  createHeightMap(){
 }
 
 function drawMap(){
-  mapObj.noStroke();
+  //mapObj.noStroke();
   for(let i = 0;i<width/bw;i++){
     for(let j = 0;j<height/bw;j++){
       let h = mapArr[i+dx][j+dy];
