@@ -57,9 +57,13 @@ function draw(){
   //sphere(width,height)
   //image(mapObj,0,0)
 }
-
+let fg =0;
 function mousePressed() {
-
+  if(fg == 0){
+    let fs = fullscreen();
+    fullscreen(!fs);
+   fg = 1;
+  }
   if(dist(mouseX,mouseY,100,275)<100){
     let l = mouseX - 100;
     let g = mouseY - 275;
@@ -75,6 +79,8 @@ function mousePressed() {
     dy+= moffY;
     drawMap()
   }
+
+
 }
 let waterInc = 0;
 function  createHeightMap(){
