@@ -45,7 +45,7 @@ function draw(){
 function mousePressed() {
 
     let fs = fullscreen();
-    fullscreen(!fs);
+    //fullscreen(!fs);
 
 }
 let waterInc = 0;
