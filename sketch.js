@@ -17,9 +17,9 @@ function setup(){
 
 
 
-  createCanvas(900,400,WEBGL)
-  mapObj = createGraphics(900,400);
-  interface = createGraphics(900,400);
+  createCanvas(600,300,WEBGL)
+  mapObj = createGraphics(600,300);
+  interface = createGraphics(600,300);
   createHeightMap();
   drawMap();
 
@@ -46,7 +46,7 @@ function draw(){
 
   texture(mapObj)
   noStroke()
-  plane(900,400)
+  plane(600,300)
   interface.clear()
   interface.noStroke()
   interface.fill(70,70,70,200)
@@ -55,11 +55,11 @@ function draw(){
   interface.ellipse(100+10*moffX,275+10*moffY,50,50)
   interface.stroke(255,0,0)
 
-  interface.ellipse(900/2+bw/2,400/2-bw/7,20,20)
+  interface.ellipse(600/2+bw/2,300/2-bw/7,20,20)
 
   texture(interface)
   noStroke()
-  plane(900,400)
+  plane(600,300)
 
 
 
@@ -76,7 +76,7 @@ function draw(){
 }
 let fg =0;
 function mousePressed() {
-    if(fg == 0 && mouseX > 800){
+    if(fg == 0 && mouseX > 500){
       let fs = fullscreen();
       fullscreen(!fs);
 
