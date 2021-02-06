@@ -15,8 +15,8 @@ function setup(){
 
 
 
-  createCanvas(800-bw,800-bw,WEBGL)
-  mapObj = createGraphics(800-bw,800-bw);
+  createCanvas(800-bw,400-bw,WEBGL)
+  mapObj = createGraphics(800-bw,400-bw);
   createHeightMap();
   drawMap();
 }
@@ -28,7 +28,7 @@ function draw(){
   mapMovement()
   texture(mapObj)
   noStroke()
-  plane(1000)
+  plane(800,400)
 
 
 
@@ -42,10 +42,14 @@ function draw(){
   //sphere(width,height)
   //image(mapObj,0,0)
 }
+let fs = 0
 function mousePressed() {
+    fs = 1;
+    if(fs==0){
+      let fs = fullscreen();
+      fullscreen(!fs);
+    }
 
-    let fs = fullscreen();
-    //fullscreen(!fs);
 
 }
 let waterInc = 0;
