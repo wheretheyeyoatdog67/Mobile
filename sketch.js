@@ -31,11 +31,11 @@ function draw(){
   clock++;
   pressedDownMouse()
   if(clock%5 == 0){
-  if(moffX > 0) moffX -= .1;
-  else if(moffX < 0) moffX += .1;
-  if(moffY > 0) moffY -= .1;
-  else if(moffY < 0) moffY += .1;
-}
+    if(moffX > 0) moffX -= .1;
+    else if(moffX < 0) moffX += .1;
+    if(moffY > 0) moffY -= .1;
+    else if(moffY < 0) moffY += .1;
+  }
 
 
   // orbitControl()
@@ -75,6 +75,15 @@ function draw(){
   //image(mapObj,0,0)
 }
 let fg =0;
+function mousePressed() {
+    if(fg == 0){
+      let fs = fullscreen();
+      fullscreen(!fs);
+      fg = 1;
+    }
+
+
+}
 function pressedDownMouse() {
   // if(fg == 0){
   //   let fs = fullscreen();
