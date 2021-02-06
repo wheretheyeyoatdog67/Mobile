@@ -17,31 +17,36 @@ function setup(){
 
 
 
-  createCanvas(800,400,WEBGL)
-  mapObj = createGraphics(800,400);
-  interface = createGraphics(800,400);
+  createCanvas(900,400,WEBGL)
+  mapObj = createGraphics(900,400);
+  interface = createGraphics(900,400);
   createHeightMap();
   drawMap();
 
 }
 let trigClock = 0;
+let clock = 0;
 function draw(){
+  trigClock+=0.1
+  clock++;
+  pressedDownMouse()
+  if(clock%5 == 0){
   if(moffX > 0) moffX -= .1;
   else if(moffX < 0) moffX += .1;
   if(moffY > 0) moffY -= .1;
   else if(moffY < 0) moffY += .1;
-
+}
 
 
   // orbitControl()
   background(0)
-  ellipseMode(CENTER)
-  trigClock+=0.1
+  //ellipseMode(CENTER)
+
   mapMovement()
 
   texture(mapObj)
   noStroke()
-  plane(800,400)
+  plane(900,400)
   interface.clear()
   interface.noStroke()
   interface.fill(70,70,70,200)
@@ -49,11 +54,12 @@ function draw(){
   interface.fill(200,200,200,200)
   interface.ellipse(100+10*moffX,275+10*moffY,50,50)
   interface.stroke(255,0,0)
-  interface.ellipse(800/2+5,400/2-5,20,20)
+
+  interface.ellipse(900/2+bw/2,400/2-bw/7,20,20)
 
   texture(interface)
   noStroke()
-  plane(800,400)
+  plane(900,400)
 
 
 
@@ -69,13 +75,13 @@ function draw(){
   //image(mapObj,0,0)
 }
 let fg =0;
-function mousePressed() {
-  if(fg == 0){
-    let fs = fullscreen();
-    fullscreen(!fs);
-   fg = 1;
-  }
-
+function pressedDownMouse() {
+  // if(fg == 0){
+  //   let fs = fullscreen();
+  //   fullscreen(!fs);
+  //  fg = 1;
+  // }
+  if(mouseIsPressed && clock%5==0){
   if(dist(mouseX,mouseY,100,275)<100){
     let l = mouseX - 100;
     let g = mouseY - 275;
@@ -97,7 +103,7 @@ function mousePressed() {
     }
     drawMap()
   }
-
+}
 
 }
 let waterInc = 0;
