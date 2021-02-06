@@ -19,6 +19,7 @@ function setup(){
   mapObj = createGraphics(800-bw,400-bw);
   createHeightMap();
   drawMap();
+
 }
 let trigClock = 0;
 function draw(){
@@ -42,14 +43,10 @@ function draw(){
   //sphere(width,height)
   //image(mapObj,0,0)
 }
-let fs = 0
-function mousePressed() {
 
-    if(fs==0){
-      let fs = fullscreen();
-      fullscreen(!fs);
-      fs = 1;
-    }
+function mousePressed() {
+fullscreen(true);
+
 
 
 }
