@@ -10,6 +10,12 @@
   </head>
   <body>
 
-    <script src="sketch.js"></script>
+    <script src="sketch.js">
+    function preventBehavior(e) {
+        e.preventDefault(); 
+      };
+
+      document.addEventListener("touchmove", preventBehavior, {passive: false});
+    </script>
   </body>
 </html>
