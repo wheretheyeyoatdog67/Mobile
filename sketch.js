@@ -74,12 +74,12 @@ function draw(){
 
   //orbitControl()
   background(96.1, 96.1, 86.3)
-  let lightLevel = 200*sin(trigClock/20);
   //if(lightLevel<0)lightLevel*=-1;
-  ambientLight(lightLevel)
-  //ellipseMode(CENTER)
-  if(player.lightOut)
-  pointLight(255,255,255, 0,0, 50);
+  // let dist = trigClock % 500;
+  // pointLight(255,255,255, 20*dist-width,0,300);
+  // //ellipseMode(CENTER)
+  // if(player.lightOut)
+  // pointLight(255,255,255, 0,0, 50);
 
   mapMovement()
 
@@ -107,12 +107,18 @@ function draw(){
   //image(mapObj,0,0)
 }
 let fg =0;
+
 function mousePressed() {
-    if(fg == 0 && mouseX > 750&& mouseY < 30){
+    if(fg == 0){
       let fs = fullscreen();
       fullscreen(!fs);
-
+      fg = 1;
     }
+    if(mouseX > 750&& mouseY < 30){
+      let fs = fullscreen();
+      fullscreen(!fs);
+    }
+
     //Lights on player
     if(dist((width/bw-4)*bw+60,height/1.6,mouseX,mouseY)<120){
       if(player.lightOut==false)player.lightOut=true;
@@ -253,7 +259,7 @@ function drawinterfaceLayer(){
   interfaceLayer.noFill()
   interfaceLayer.rect(0,0,width,height)
   interfaceLayer.strokeWeight(10)
-  interfaceLayer.fill(245,200,100,120)
+  interfaceLayer.fill(245,200,100,220)
   interfaceLayer.rect((width/bw-4)*bw,height/2,120,height/2)
   interfaceLayer.fill(255,0,0,100)
   interfaceLayer.ellipse((width/bw-4)*bw+60,height/1.6,60,60)
