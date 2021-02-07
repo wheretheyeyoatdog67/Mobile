@@ -124,7 +124,7 @@ function mousePressed() {
       }
 
     }
-    if(mouseX > width-30&& mouseY < 30){
+    if(mouseX > width-60&& mouseY < 60){
       let fs = fullscreen();
       fullscreen(!fs);
     }
