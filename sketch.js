@@ -5,6 +5,8 @@ let dx =0;
 let dy =0;
 let moffX = 0;
 let moffY = 0;
+let wPbw;
+let hpbw;
 function preload(){
   grass = loadImage("assets/Tiles/mapTiles/grass.png")
   grassDark = loadImage("assets/Tiles/mapTiles/grassD.png")
@@ -46,9 +48,11 @@ function setup(){
 
 
 
-  createCanvas(780,360,WEBGL)
-  mapObj = createGraphics(780,360);
-  interfaceLayer = createGraphics(780,360);
+  createCanvas(780,330,WEBGL)
+
+  mapObj = createGraphics(width,height);
+  interfaceLayer = createGraphics(width,height);
+
   createHeightMap();
   drawMap();
   player = new Player();
@@ -85,7 +89,7 @@ function draw(){
 
   texture(mapObj)
   noStroke()
-  plane(780,360)
+  plane(width,height)
   //interfaceLayer.strokeWeight(1)
 
 
@@ -101,7 +105,7 @@ function draw(){
   texture(interfaceLayer)
 
   noStroke()
-  plane(780,360)
+  plane(width,height)
   //rotateY(trigClock)
   //sphere(width,height)
   //image(mapObj,0,0)
@@ -120,7 +124,7 @@ function mousePressed() {
       }
 
     }
-    if(mouseX > 750&& mouseY < 30){
+    if(mouseX > width-30&& mouseY < 30){
       let fs = fullscreen();
       fullscreen(!fs);
     }
@@ -278,9 +282,9 @@ function drawinterfaceLayer(){
   interfaceLayer.ellipse(100+10*moffX,275+10*moffY,50,50)
   interfaceLayer.stroke(255,0,0)
   interfaceLayer.strokeWeight(3)
-  interfaceLayer.rect(750,0,bw,bw)
-  interfaceLayer.line(750,0,780,bw)
-  interfaceLayer.line(780,0,750,bw)
+  interfaceLayer.rect(width-30,0,bw,bw)
+  interfaceLayer.line(width-30,0,width,bw)
+  interfaceLayer.line(width,0,width-30,bw)
 
 
 }
