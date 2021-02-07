@@ -74,9 +74,9 @@ function draw(){
 
   //orbitControl()
   background(96.1, 96.1, 86.3)
-  let lightLevel = 255*sin(trigClock/20);
+  let lightLevel = 200*sin(trigClock/20);
   //if(lightLevel<0)lightLevel*=-1;
-  ambientLight(lightLevel,lightLevel,lightLevel)
+  ambientLight(lightLevel)
   //ellipseMode(CENTER)
   if(player.lightOut)
   pointLight(255,255,255, 0,0, 50);
@@ -113,7 +113,13 @@ function mousePressed() {
       fullscreen(!fs);
 
     }
+    //Lights on player
+    if(dist((width/bw-4)*bw+60,height/1.6,mouseX,mouseY)<120){
+      if(player.lightOut==false)player.lightOut=true;
+      else player.lightOut=false;
+    }
 
+    mapObj.ellipse(mouseX,mouseY,20,20)
 
 }
 function pressedDownMouse() {
@@ -242,10 +248,15 @@ function keyPressed() {
 function drawinterfaceLayer(){
 
   interfaceLayer.clear()
-  interfaceLayer.strokeWeight(30)
+  interfaceLayer.strokeWeight(10)
   interfaceLayer.stroke(245,200,100)
   interfaceLayer.noFill()
   interfaceLayer.rect(0,0,width,height)
+  interfaceLayer.strokeWeight(10)
+  interfaceLayer.fill(245,200,100,120)
+  interfaceLayer.rect((width/bw-4)*bw,height/2,120,height/2)
+  interfaceLayer.fill(255,0,0,100)
+  interfaceLayer.ellipse((width/bw-4)*bw+60,height/1.6,60,60)
   interfaceLayer.noStroke()
   interfaceLayer.fill(70,70,70,200)
   interfaceLayer.ellipse(100,275,100,100)
@@ -258,6 +269,8 @@ function drawinterfaceLayer(){
   interfaceLayer.rect(750,0,bw,bw)
   interfaceLayer.line(750,0,780,bw)
   interfaceLayer.line(780,0,750,bw)
+
+
 }
 
 class effects{
