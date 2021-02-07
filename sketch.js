@@ -56,10 +56,12 @@ function setup(){
 let trigClock = 0;
 let clock = 0;
 function draw(){
+
   trigClock+=0.1
   clock++;
   pressedDownMouse()
-  if(clock%5 == 0){
+
+  if(clock%1 == 0&&!mouseIsPressed){
     if(moffX > 0) moffX -= .1;
     else if(moffX < 0) moffX += .1;
     if(moffY > 0) moffY -= .1;
@@ -70,9 +72,14 @@ function draw(){
   }
 
 
-  // orbitControl()
-  background(0)
+  //orbitControl()
+  background(96.1, 96.1, 86.3)
+  let lightLevel = 255*sin(trigClock/20);
+  //if(lightLevel<0)lightLevel*=-1;
+  ambientLight(lightLevel,lightLevel,lightLevel)
   //ellipseMode(CENTER)
+  if(player.lightOut)
+  pointLight(255,255,255, 0,0, 50);
 
   mapMovement()
 
@@ -92,6 +99,7 @@ function draw(){
   drawinterfaceLayer()
   player.drawPlayer()
   texture(interfaceLayer)
+
   noStroke()
   plane(780,360)
   //rotateY(trigClock)
@@ -109,12 +117,7 @@ function mousePressed() {
 
 }
 function pressedDownMouse() {
-  // if(fg == 0){
-  //   let fs = fullscreen();
-  //   fullscreen(!fs);
-  //  fg = 1;
-  // }
-  if(mouseIsPressed && clock%5==0){
+  if(mouseIsPressed && clock%8==0){
   if(dist(mouseX,mouseY,100,275)<100){
     let l = mouseX - 100;
     let g = mouseY - 275;
@@ -130,7 +133,7 @@ function pressedDownMouse() {
       moffY = 0;
     }
     else {
-      console.log("hi")
+      //console.log("hi")
       dy+= moffY;
       moffX = 0;
     }
@@ -145,7 +148,6 @@ function  createHeightMap(){
   let riverInc = 0.04;
 
   for(let i = 0;i<1000;i++){
-
     mapArr.push([]);
     riverArr.push([]);
     for(let j = 0;j<1000;j++){
@@ -158,19 +160,22 @@ function  createHeightMap(){
 }
 
 function drawMap(){
-  mapObj.noStroke();
+  //mapObj.noStroke();
   for(let i = 0;i<width/bw;i++){
     for(let j = 0;j<height/bw;j++){
       let h = mapArr[i+dx][j+dy];
+      mapObj.strokeWeight(3)
+      mapObj.stroke(96.1, 96.1, 86.3)
       if(h<.2){
         mapObj.image(sand,i*bw,j*bw)
-        //mapObj.rect(i*bw,j*bw,bw,bw)
-        //mapObj.fill(194,178+10*sin(h*(dx+i)),128)
+        mapObj.noFill()
+
+        mapObj.rect(i*bw,j*bw,bw,bw)
       }
       else if(h<.45){
         mapObj.image(sand,i*bw,j*bw)
-
-        //mapObj.fill(0,50+10*sin(h*(i+dx)),100)
+        mapObj.noFill()
+        mapObj.rect(i*bw,j*bw,bw,bw)
       }
 
       else if(h<.55){
@@ -184,16 +189,15 @@ function drawMap(){
         mapObj.image(grass,i*bw,j*bw)
         if(h>.7+sin((i+dx)*(j+dy)))
         mapObj.image(grassMid,i*bw,j*bw)
-        //mapObj.fill(0,0,60*sin(h*(i+dx)),70)
-        //mapObj.rect(i*bw,j*bw,bw,bw)
-      }
-      // else if(h<.82){
-      //   mapObj.fill(128,128,128)
-      //   mapObj.rect(i*bw,j*bw,bw,bw)
-      // }
+        mapObj.noFill()
 
+        mapObj.rect(i*bw,j*bw,bw,bw)
+      }
       else if(h<1){
         mapObj.fill(107,126,135)
+        mapObj.rect(i*bw,j*bw,bw,bw)
+        mapObj.noFill()
+
         mapObj.rect(i*bw,j*bw,bw,bw)
       }
 
@@ -201,14 +205,15 @@ function drawMap(){
   }
 }
 function mapMovement(){
-  waterInc += 0.03;
+  waterInc += 0.3;
 
   push()
   for(let i = 0;i<width/bw;i++){
     for(let j = 0;j<height/bw;j++){
         let h = mapArr[i+dx][j+dy];
         if(h>.2&&h<.4){
-          mapObj.fill(0,0,150-20*sin(h*(dx+i+waterInc)),255,200)
+          mapObj.image(sand,i*bw,j*bw)
+          mapObj.fill(0,0,150-40*sin(h*h*(dx+i+waterInc)),h*450)
           mapObj.rect(i*bw,j*bw,bw,bw)
         }
         //clouds
@@ -235,7 +240,12 @@ function keyPressed() {
   drawMap()
 }
 function drawinterfaceLayer(){
+
   interfaceLayer.clear()
+  interfaceLayer.strokeWeight(30)
+  interfaceLayer.stroke(245,200,100)
+  interfaceLayer.noFill()
+  interfaceLayer.rect(0,0,width,height)
   interfaceLayer.noStroke()
   interfaceLayer.fill(70,70,70,200)
   interfaceLayer.ellipse(100,275,100,100)
@@ -248,23 +258,10 @@ function drawinterfaceLayer(){
   interfaceLayer.rect(750,0,bw,bw)
   interfaceLayer.line(750,0,780,bw)
   interfaceLayer.line(780,0,750,bw)
-
-
 }
-class Player{
-  constructor(){
-    this.x = 780/2/bw
-    this.y = 360/2/bw
 
-  }
-  drawPlayer(){
-    let frame = pr1;
-    if(moffX > 0)frame = pr1;
-    else if(moffX < 0)frame = pl1;
-
-    else if(moffY > 0)frame = pf1;
-    else if(moffY < 0 || moffY == 0)frame = pu1;
-    //else if(frame = pl1;)
-    interfaceLayer.image(frame,this.x*bw,this.y*bw)
-  }
+class effects{
+  //animations
+  //wood cutting
+  //etc
 }
