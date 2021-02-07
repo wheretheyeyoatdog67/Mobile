@@ -9,20 +9,49 @@ function preload(){
   grass = loadImage("assets/Tiles/mapTiles/grass.png")
   grassDark = loadImage("assets/Tiles/mapTiles/grassD.png")
   sand = loadImage("assets/Tiles/mapTiles/sand1.png")
+
+  pf1 = loadImage("assets/player/pf1.png")
+  pf2 = loadImage("assets/player/pf2.png")
+
+  pl1 = loadImage("assets/player/pl1.png")
+  pl2 = loadImage("assets/player/pl2.png")
+
+  pr1 = loadImage("assets/player/pr1.png")
+  pr2 = loadImage("assets/player/pr2.png")
+
+  pu1 = loadImage("assets/player/pu1.png")
+  pu2 = loadImage("assets/player/pu2.png")
+
+  grassMid = loadImage("assets/Tiles/midGround/grassMid.png")
+
 }
 function setup(){
   grass.resize(bw,bw)
   grassDark.resize(bw,bw)
   sand.resize(bw,bw)
+  pf1.resize(bw,bw)
+  pf2.resize(bw,bw)
+
+  pl1.resize(bw,bw)
+  pl2.resize(bw,bw)
+
+  pr1.resize(bw,bw)
+  pr2.resize(bw,bw)
+
+  pu1.resize(bw,bw)
+  pu2.resize(bw,bw)
+  grassMid.resize(bw,bw)
+
+
 
 
 
   createCanvas(780,360,WEBGL)
   mapObj = createGraphics(780,360);
-  interface = createGraphics(780,360);
+  interfaceLayer = createGraphics(780,360);
   createHeightMap();
   drawMap();
-
+  player = new Player();
 }
 let trigClock = 0;
 let clock = 0;
@@ -35,6 +64,9 @@ function draw(){
     else if(moffX < 0) moffX += .1;
     if(moffY > 0) moffY -= .1;
     else if(moffY < 0) moffY += .1;
+
+    if(moffX*moffX < .1)moffX = 0;
+    if(moffY*moffY<.1)moffY = 0;
   }
 
 
@@ -47,39 +79,21 @@ function draw(){
   texture(mapObj)
   noStroke()
   plane(780,360)
-  //interface.strokeWeight(1)
-  interface.clear()
-  interface.noStroke()
-  interface.fill(70,70,70,200)
-  interface.ellipse(100,275,100,100)
-  interface.fill(70,0,0,150)
-  interface.ellipse(100,275,20,20)
-  interface.fill(200,200,200,200)
-  interface.ellipse(100+10*moffX,275+10*moffY,50,50)
-  interface.ellipse(780/2+bw/2,360/2-bw/2,20,20)
-  interface.stroke(255,0,0)
-
-  interface.strokeWeight(3)
-
-  interface.rect(750,0,bw,bw)
-  interface.line(750,0,780,bw)
-  interface.line(780,0,750,bw)
+  //interfaceLayer.strokeWeight(1)
 
 
 
-  texture(interface)
+
+
+
+
+
+
+  drawinterfaceLayer()
+  player.drawPlayer()
+  texture(interfaceLayer)
   noStroke()
   plane(780,360)
-
-
-
-
-
-
-
-
-
-
   //rotateY(trigClock)
   //sphere(width,height)
   //image(mapObj,0,0)
@@ -155,30 +169,28 @@ function drawMap(){
       }
       else if(h<.45){
         mapObj.image(sand,i*bw,j*bw)
-        //mapObj.rect(i*bw,j*bw,bw,bw)
+
         //mapObj.fill(0,50+10*sin(h*(i+dx)),100)
       }
-      // else if(h<.49){
-      //   mapObj.fill(135,124+10*sin(h*(i+dx)),89)
-      //   mapObj.rect(i*bw,j*bw,bw,bw)
-      // }
-      // // else if(h<.47){
-      // //   mapObj.fill(100+20*sin(h*(i+dx)),124,89)
-      // // }
+
       else if(h<.55){
         mapObj.image(grassDark,i*bw,j*bw)
         mapObj.fill(0,0,60*sin(h*(i+dx)),0)
         mapObj.rect(i*bw,j*bw,bw,bw)
+        if(h>.5+sin((i+dx)*(j+dy)))
+        mapObj.image(grassMid,i*bw,j*bw)
       }
       else if(h<.8){
         mapObj.image(grass,i*bw,j*bw)
+        if(h>.7+sin((i+dx)*(j+dy)))
+        mapObj.image(grassMid,i*bw,j*bw)
         //mapObj.fill(0,0,60*sin(h*(i+dx)),70)
         //mapObj.rect(i*bw,j*bw,bw,bw)
       }
-      else if(h<.82){
-        mapObj.fill(128,128,128)
-        mapObj.rect(i*bw,j*bw,bw,bw)
-      }
+      // else if(h<.82){
+      //   mapObj.fill(128,128,128)
+      //   mapObj.rect(i*bw,j*bw,bw,bw)
+      // }
 
       else if(h<1){
         mapObj.fill(107,126,135)
@@ -222,9 +234,37 @@ function keyPressed() {
   }
   drawMap()
 }
+function drawinterfaceLayer(){
+  interfaceLayer.clear()
+  interfaceLayer.noStroke()
+  interfaceLayer.fill(70,70,70,200)
+  interfaceLayer.ellipse(100,275,100,100)
+  interfaceLayer.fill(70,0,0,150)
+  interfaceLayer.ellipse(100,275,20,20)
+  interfaceLayer.fill(200,200,200,200)
+  interfaceLayer.ellipse(100+10*moffX,275+10*moffY,50,50)
+  interfaceLayer.stroke(255,0,0)
+  interfaceLayer.strokeWeight(3)
+  interfaceLayer.rect(750,0,bw,bw)
+  interfaceLayer.line(750,0,780,bw)
+  interfaceLayer.line(780,0,750,bw)
 
 
-// if(h < .5&& h>.4)mapObj.fill(0,0,255)
-// else mapObj.fill(255*h)
-// // //if(i == width/bw/2&& j == height/bw/2)mapObj.fill(255,0,0)
-// mapObj.rect(i*bw,j*bw,bw,bw)
+}
+class Player{
+  constructor(){
+    this.x = 780/2/bw
+    this.y = 360/2/bw
+
+  }
+  drawPlayer(){
+    let frame = pr1;
+    if(moffX > 0)frame = pr1;
+    else if(moffX < 0)frame = pl1;
+
+    else if(moffY > 0)frame = pf1;
+    else if(moffY < 0 || moffY == 0)frame = pu1;
+    //else if(frame = pl1;)
+    interfaceLayer.image(frame,this.x*bw,this.y*bw)
+  }
+}
