@@ -109,10 +109,16 @@ function draw(){
 let fg =0;
 
 function mousePressed() {
+
     if(fg == 0){
       let fs = fullscreen();
-      fullscreen(!fs);
-      fg = 1;
+      console.log(fs)
+      if(fs==undefined){
+        console.log(fs)
+        fullscreen(!fs);
+        fg = 1;
+      }
+
     }
     if(mouseX > 750&& mouseY < 30){
       let fs = fullscreen();
