@@ -48,7 +48,7 @@ function setup(){
 
 
 
-  createCanvas(780,330,WEBGL)
+  createCanvas(780,360,WEBGL)
 
   mapObj = createGraphics(width,height);
   interfaceLayer = createGraphics(width,height);
